@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { clearExpenseList } from "../../app/actions";
 import { Container, Wrapper } from "./TransactionsList.style";
@@ -11,18 +11,39 @@ type State = {
 type List = {
   list: [];
 };
+
+type Prev = {
+  value: number;
+};
+
 type ExpenseInfo = { text: string; value: number };
 
 const TransactionsList = () => {
-  const expensesInfo = useSelector((state: State) => state.expense.list);
-  const { list } = useSelector((state: List) => state);
-  const dispatch = useDispatch();
+  const [maxExp, setMaxExp] = useState();
 
-  console.log(list);
+  const expensesInfo = useSelector((state: State) => state.expense.list);
+
+  const dispatch = useDispatch();
 
   const handleClearList = () => {
     dispatch(clearExpenseList());
   };
+  useEffect(() => {
+    if (expensesInfo.length !== 0) {
+      let max = expensesInfo.reduce(function (prev, current) {
+        //@ts-ignore
+        if (+current.value > +prev.value) {
+          setMaxExp(current);
+          return current;
+        } else {
+          setMaxExp(prev);
+          return prev;
+        }
+      });
+    }
+  }, [expensesInfo]);
+
+  console.log(maxExp);
 
   return (
     <Container>
@@ -31,12 +52,13 @@ const TransactionsList = () => {
         <p>Expense Name</p>
         <p>PLN</p>
         <p>EUR</p>
+        <p>Delete</p>
         {expensesInfo.map((expenseInfo: ExpenseInfo, index) => {
           return (
             <Transaction
               text={expenseInfo.text}
               value={expenseInfo.value}
-              Lp={index + 1}
+              id={index}
             />
           );
         })}

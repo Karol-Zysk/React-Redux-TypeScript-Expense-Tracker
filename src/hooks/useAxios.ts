@@ -31,8 +31,6 @@ const useAxios = () => {
     fetchData();
   }, []);
 
-  console.log(course);
-
   return { course, courseDate, error, loading };
 };
 

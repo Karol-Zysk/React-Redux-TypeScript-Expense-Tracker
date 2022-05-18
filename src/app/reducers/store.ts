@@ -5,6 +5,7 @@ import expenseReducer from "./expenseReducer";
 
 export const store = configureStore({
   reducer: {
+    //@ts-ignore
     expense: expenseReducer,
   },
 });

@@ -20,37 +20,25 @@ const ExpenseInput = () => {
   };
 
   return (
-    <div className="card card-body my-3">
+    <div>
       <form onSubmit={handleSubmit}>
-        <div className="input-group">
-          <div className="input-group-prepend">
-            <div className="input-group-text bg-primary text-white">
-              <i className="fas fa-book" />
-            </div>
-          </div>
+        <div>
           <input
             type="text"
-            className="form-control text-capitalize"
-            placeholder="add a todo item"
-            name="todo"
+            placeholder="add expense title"
+            name="expense title"
             value={text}
             onChange={(event) => setText(event.target.value)}
           />
           <input
             type="number"
-            className="form-control text-capitalize"
             placeholder="add value"
-            name="expense"
+            name="expense value"
             value={value}
             onChange={(event) => setValue(event.target.value)}
           />
         </div>
-        <button
-          className="btn btn-block btn-primary mt-3"
-          onClick={handleSubmit}
-        >
-          add item
-        </button>
+        <button onClick={handleSubmit}>add item</button>
       </form>
     </div>
   );

@@ -1,18 +1,9 @@
 import React from "react";
-import { Container, Title } from "./App.style";
-import ActualCourse from "./components/ActualCourse/ActualCourse";
-import TransactionForm from "./components/TransactionForm/TransactionForm";
-import TransactionsList from "./components/TransactionsList/TransactionsList";
+
+import MainPage from "./pages/MainPage";
 
 function App() {
-  return (
-    <Container>
-      <Title>Expense Tracker</Title>
-      <ActualCourse />
-      <TransactionForm />
-      <TransactionsList />
-    </Container>
-  );
+  return <MainPage />;
 }
 
 export default App;

@@ -4,6 +4,7 @@ import {
   ADD_EXPENSE,
   CLEAR_EXPENSE_LIST,
   DELETE_EXPENSE,
+  MAX_EXPENSE,
 } from "./action.types";
 
 let count = 0;
@@ -40,5 +41,11 @@ export const deleteExpense = (id: number) => {
   return {
     type: DELETE_EXPENSE,
     id,
+  };
+};
+export const maxExpense = (value: number) => {
+  return {
+    type: MAX_EXPENSE,
+    value,
   };
 };

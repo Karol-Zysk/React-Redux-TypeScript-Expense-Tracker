@@ -3,3 +3,4 @@ export const RESET_COUNTER = "ADD_COUNTER";
 export const ADD_EXPENSE = "ADD_EXPENSE";
 export const CLEAR_EXPENSE_LIST = "CLEAR_EXPENSE_LIST";
 export const DELETE_EXPENSE = "DELETE_EXPENSE";
+export const MAX_EXPENSE = "MAX_EXPENSE";
