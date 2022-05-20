@@ -53,7 +53,7 @@ const ExpenseInput = () => {
   return (
     <Form onSubmit={handleSubmit}>
       <FormTitle>Fill the inputs to add expense.</FormTitle>
-      <HStack spacing={2}>
+      <HStack spacing={2} padding="1rem">
         <Input
           fontSize={{ base: "14px", md: "16px", lg: "18px" }}
           height={{ base: "26px", md: "28px", lg: "34px" }}
@@ -91,9 +91,9 @@ const ExpenseInput = () => {
           }) => setValue(event.target.value)}
         />
         <Select
-          fontSize={{ base: "10px", md: "12px", lg: "14px" }}
+          fontSize={{ base: "14px", md: "16px", lg: "18px" }}
           height={{ base: "26px", md: "28px", lg: "34px" }}
-          w="content"
+          w="30%"
           textColor="whiteAlpha.800"
           _placeholder={{ opacity: 1, color: "blackAlpha.800" }}
           value={currency}
