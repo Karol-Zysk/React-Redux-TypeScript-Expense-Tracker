@@ -83,7 +83,7 @@ const ExpenseInput = () => {
           max="999999999999"
           min="0"
           errorBorderColor="red"
-          placeholder="Value PLN"
+          placeholder={`Value ${currency}`}
           name="expense value"
           value={value}
           onChange={(event: {
