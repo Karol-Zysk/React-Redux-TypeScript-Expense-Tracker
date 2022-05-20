@@ -1,18 +1,26 @@
 import React from "react";
 import ActualCourse from "../components/ActualCourse/ActualCourse";
 import TransactionForm from "../components/TransactionForm/TransactionForm";
-import { Container, ImageWrapper, Table, Title, Wrapper } from "./MainPage.style";
+import {
+  Container,
+  
+  Table,
+  Wrapper,
+} from "./MainPage.style";
+import TransactionsList from "../components/TransactionsList/TransactionsList";
+import MaxExpenseTab from "../components/TransactionsList/MaxExpense";
 
 const MainPage = () => {
   return (
     <Container>
-      <Title>Expense Tracker</Title>
+      <ActualCourse />
       <Wrapper>
         <Table>
-          <ActualCourse />
           <TransactionForm />
+          <TransactionsList />
         </Table>
-        <ImageWrapper>AAA</ImageWrapper>
+        <MaxExpenseTab />
+        
       </Wrapper>
     </Container>
   );

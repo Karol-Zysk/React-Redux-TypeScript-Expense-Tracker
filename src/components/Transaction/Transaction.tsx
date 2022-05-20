@@ -1,16 +1,25 @@
+import { motion } from "framer-motion";
 import React, { FunctionComponent } from "react";
 import { useDispatch } from "react-redux";
 import { deleteExpense } from "../../app/actions";
 import useAxios from "../../hooks/useAxios";
-import { TableItem } from "./Transaction.style";
+import {
+  Table,
+  TableItem,
+  Icon,
+  IconWrapper,
+  TableItemID,
+  TableItemValue,
+} from "./Transaction.style";
 
 type Props = {
   text: string;
   value: number;
   id: number;
+  index: number;
 };
 
-const Transaction: FunctionComponent<Props> = ({ text, value, id }) => {
+const Transaction: FunctionComponent<Props> = ({ text, value, id, index }) => {
   const dispatch = useDispatch();
 
   const { course } = useAxios();
@@ -18,15 +27,24 @@ const Transaction: FunctionComponent<Props> = ({ text, value, id }) => {
     dispatch(deleteExpense(id));
   };
   return (
-    <>
-      <TableItem>{id}</TableItem>
+    <Table
+      as={motion.div}
+      initial={{ opacity: 0.5, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0 }}
+      tabNumber={index}
+    >
+      <TableItemID>{index + 1}.</TableItemID>
       <TableItem>{text}</TableItem>
-      <TableItem>{value}</TableItem>
-      <TableItem>
-        {(Math.round((value / course) * 100) / 100).toFixed(2)}
-      </TableItem>
-      <button onClick={handleDelete}>Delete</button>
-    </>
+      <TableItemValue>
+        {value} PLN <br></br>
+        {(Math.round((value / course) * 100) / 100).toFixed(2)} EUR
+      </TableItemValue>
+
+      <IconWrapper>
+        <Icon onClick={handleDelete}>X</Icon>
+      </IconWrapper>
+    </Table>
   );
 };
 

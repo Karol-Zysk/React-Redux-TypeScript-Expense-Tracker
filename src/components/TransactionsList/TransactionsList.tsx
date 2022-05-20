@@ -1,26 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { clearExpenseList } from "../../app/actions";
-import { Container, Wrapper } from "./TransactionsList.style";
+import {
+  ButtonWrapper,
+  Container,
+  List,
+  ListWrapper,
+  Table,
+} from "./TransactionsList.style";
 import Transaction from "../Transaction/Transaction";
+import { Button } from "@chakra-ui/react";
+import { motion } from "framer-motion";
+import { State } from "../../../type";
+import { H1 } from "../Transaction/Transaction.style";
 
-type State = {
-  expense: List;
-};
-
-type List = {
-  list: [];
-};
-
-type Prev = {
-  value: number;
-};
-
-type ExpenseInfo = { text: string; value: number };
+type ExpenseInfo = { text: string; value: number; id: number };
 
 const TransactionsList = () => {
-  const [maxExp, setMaxExp] = useState();
-
   const expensesInfo = useSelector((state: State) => state.expense.list);
 
   const dispatch = useDispatch();
@@ -28,44 +24,56 @@ const TransactionsList = () => {
   const handleClearList = () => {
     dispatch(clearExpenseList());
   };
-  useEffect(() => {
-    if (expensesInfo.length !== 0) {
-      let max = expensesInfo.reduce(function (prev, current) {
-        //@ts-ignore
-        if (+current.value > +prev.value) {
-          setMaxExp(current);
-          return current;
-        } else {
-          setMaxExp(prev);
-          return prev;
-        }
-      });
-    }
-  }, [expensesInfo]);
-
-  console.log(maxExp);
 
   return (
     <Container>
-      <Wrapper>
-        <p>Lp.</p>
-        <p>Expense Name</p>
-        <p>PLN</p>
-        <p>EUR</p>
-        <p>Delete</p>
-        {expensesInfo.map((expenseInfo: ExpenseInfo, index) => {
-          return (
-            <Transaction
-              text={expenseInfo.text}
-              value={expenseInfo.value}
-              id={index}
-            />
-          );
-        })}
-      </Wrapper>
-      <button type="button" onClick={handleClearList}>
-        clear list
-      </button>
+      <Table>
+        {expensesInfo.length === 0 ? null : (
+          <>
+            {" "}
+            <ListWrapper
+              as={motion.div}
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0 }}
+            >
+              <H1>Your Expenses</H1>
+              <List>
+                {expensesInfo.map((expenseInfo: ExpenseInfo, index) => {
+                  return (
+                    <Transaction
+                      text={expenseInfo.text}
+                      value={expenseInfo.value}
+                      id={expenseInfo.id}
+                      index={index}
+                    />
+                  );
+                })}
+              </List>
+            </ListWrapper>
+            {expensesInfo.length !== 0 && (
+              <ButtonWrapper
+                as={motion.div}
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0 }}
+              >
+                <Button
+                  colorScheme="grey"
+                  color="blackAlpha.900"
+                  width="15%"
+                  justifySelf="flex-end"
+                  border="1px"
+                  type="button"
+                  onClick={handleClearList}
+                >
+                  Clear
+                </Button>
+              </ButtonWrapper>
+            )}
+          </>
+        )}
+      </Table>
     </Container>
   );
 };
