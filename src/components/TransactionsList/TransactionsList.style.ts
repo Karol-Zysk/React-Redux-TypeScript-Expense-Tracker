@@ -13,7 +13,7 @@ export const Table = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-height: 55vh;
+  max-height: 50vh;
 `;
 export const InitialTable = styled.div`
   display: flex;
@@ -25,8 +25,8 @@ export const InitialTable = styled.div`
 export const ListWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  box-shadow: 1px 3px 6px gray;
   padding: 1rem;
+  padding-top: 0;
   min-height: 50%;
   max-height: 80%;
   overflow-y: scroll;
@@ -42,15 +42,10 @@ export const MaxExpense = styled.div`
   width: 50%;
   display: flex;
   flex-direction: column;
-  text-align: center;
-
-  box-shadow: 1px 3px 6px gray;
+  text-align: left;
   padding: 2rem;
-  border-top-left-radius: 2rem;
   @media (max-width: 768px) {
     width: auto;
-    border-top-right-radius: 1rem;
-    border-top-left-radius: 1rem;
     box-shadow: none;
   }
 `;

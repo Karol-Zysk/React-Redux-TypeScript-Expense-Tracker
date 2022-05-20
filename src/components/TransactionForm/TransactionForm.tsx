@@ -83,10 +83,11 @@ const ExpenseInput = () => {
         <Button
           colorScheme="grey"
           color="blackAlpha.900"
-          marginRight="1.5rem"
+          marginRight="1rem"
           border="1px"
           onClick={handleSubmit}
           disabled={text === "" || value === ""}
+          h={{ base: "30px", md: "34px", lg: "38px" }}
         >
           Add
         </Button>

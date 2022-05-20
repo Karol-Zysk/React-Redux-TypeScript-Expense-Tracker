@@ -12,7 +12,7 @@ import Transaction from "../Transaction/Transaction";
 import { Button } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import { State } from "../../../type";
-import { H1 } from "../Transaction/Transaction.style";
+import {  H2 } from "../Transaction/Transaction.style";
 
 type ExpenseInfo = { text: string; value: number; id: number };
 
@@ -37,7 +37,7 @@ const TransactionsList = () => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0 }}
             >
-              <H1>Your Expenses</H1>
+              <H2>Your Expenses</H2>
               <List>
                 {expensesInfo.map((expenseInfo: ExpenseInfo, index) => {
                   return (
@@ -66,6 +66,7 @@ const TransactionsList = () => {
                   border="1px"
                   type="button"
                   onClick={handleClearList}
+                  h={{ base: "30px", md: "34px", lg: "38px" }}
                 >
                   Clear
                 </Button>

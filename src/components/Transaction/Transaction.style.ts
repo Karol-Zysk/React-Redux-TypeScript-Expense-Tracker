@@ -3,15 +3,18 @@ import { BsFillTrashFill } from "react-icons/bs";
 
 export const TableItem = styled.div`
   align-items: center;
-  box-shadow: 1px 2px 4px black;
   padding: 4px;
+  padding-left: 1rem;
+  box-shadow: 1px 2px 4px black;
   padding-left: 8px;
   display: flex;
   @media (max-width: 1024px) {
     padding: 3px;
+    padding-left: 0.5rem;
   }
   @media (max-width: 768px) {
     padding: 2px;
+    padding-left: 0.5rem;
   }
 `;
 
@@ -53,6 +56,7 @@ type Prop = {
 
 export const Table = styled.div<Prop>`
   padding: 0.2rem;
+  font-size: 0.8rem;
   display: grid;
   grid-template-columns: 0.2fr 2fr 1fr 0.3fr;
   background: ${({ tabNumber }) =>
@@ -97,5 +101,18 @@ export const H1 = styled.h1`
   }
   @media (max-width: 486px) {
     font-size: 1.3rem;
+  }
+`;
+
+export const H2 = styled.h2`
+  font-size: 2rem;
+  @media (max-width: 1024px) {
+    font-size: 1.7rem;
+  }
+  @media (max-width: 768px) {
+    font-size: 1.3rem;
+  }
+  @media (max-width: 486px) {
+    font-size: 1.2rem;
   }
 `;

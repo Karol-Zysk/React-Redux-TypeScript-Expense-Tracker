@@ -8,7 +8,8 @@ import {
   Wrapper,
 } from "./MainPage.style";
 import TransactionsList from "../components/TransactionsList/TransactionsList";
-import MaxExpenseTab from "../components/TransactionsList/MaxExpense";
+import MaxExpenseTab from "../components/MaxExpense/MaxExpense";
+
 
 const MainPage = () => {
   return (

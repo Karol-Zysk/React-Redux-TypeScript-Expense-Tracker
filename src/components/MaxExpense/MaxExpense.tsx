@@ -1,29 +1,14 @@
-import { animate, motion } from "framer-motion";
-import React, { useEffect, useRef, useState } from "react";
+import { motion } from "framer-motion";
+import React, { useEffect,  useState } from "react";
 import { useSelector } from "react-redux";
-import { MaxExpense, MaxExpenseP } from "./TransactionsList.style";
 import { State } from "../../../type";
 import useAxios from "../../hooks/useAxios";
+import Counter from "../Counter/Counter";
+import SummedTransacrions from "../SummedTransacrions/SummedTransacrions";
 import { H1 } from "../Transaction/Transaction.style";
+import { MaxExpense, MaxExpenseP } from "../TransactionsList/TransactionsList.style";
 
-function Counter({ from, to }: any) {
-  const nodeRef = useRef() as React.MutableRefObject<HTMLParagraphElement>;
 
-  useEffect(() => {
-    const node = nodeRef.current;
-
-    const controls = animate(from, to, {
-      duration: 2,
-      ease: "easeOut",
-      onUpdate(value) {
-        node.textContent = value.toFixed(2);
-      },
-    });
-    return () => controls.stop();
-  }, [from, to]);
-
-  return <span ref={nodeRef} />;
-}
 
 const MaxExpenseTab = () => {
   const { course } = useAxios();
@@ -59,12 +44,7 @@ const MaxExpenseTab = () => {
     }
   }, [maxExp, expensesInfo]);
 
-  useEffect(() => {
-    const sum = expensesInfo.reduce((accumulator, object) => {
-      return accumulator + object["value"];
-    }, 0);
-    console.log(sum);
-  }, [expensesInfo]);
+  
 
   return (
     <MaxExpense
@@ -99,6 +79,8 @@ const MaxExpenseTab = () => {
               <Counter from={from} to={actualMax / course} />
             </MaxExpenseP>
           </>
+          <SummedTransacrions
+          expensesInfo={expensesInfo}/>
         </div>
       )}
     </MaxExpense>
