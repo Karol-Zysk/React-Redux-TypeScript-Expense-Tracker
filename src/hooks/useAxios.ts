@@ -14,7 +14,7 @@ const useAxios = () => {
         "https://api.nbp.pl/api/exchangerates/rates/c/eur/today/?format=json"
       )
       .then((res) => {
-        setCourse(res.data.rates[0].ask);
+        setCourse(res.data.rates[0].ask.toFixed(2));
         setCourseDate(res.data.rates[0].effectiveDate || Date);
       })
       .catch((err) => {

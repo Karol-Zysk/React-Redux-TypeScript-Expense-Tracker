@@ -1,7 +1,8 @@
-import { Button, HStack, Input } from "@chakra-ui/react";
-import React, { useState } from "react";
+import { Button, HStack, Input, Select } from "@chakra-ui/react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { addExpense } from "../../app/actions/index";
+import useAxios from "../../hooks/useAxios";
 import {
   Form,
   Message,
@@ -11,10 +12,22 @@ import {
 } from "./TransactionForm.style";
 
 const ExpenseInput = () => {
+  const { course } = useAxios();
   const [text, setText] = useState("");
   const [message, setMessage] = useState("");
+  const [currency, setCurrency] = useState("EUR");
+  console.log(currency);
 
   const [value, setValue] = useState("");
+  const [valueAfterCurrency, setValueAfterCurrency] = useState(1);
+
+  useEffect(() => {
+    if (currency === "EUR") {
+      setValueAfterCurrency(course);
+    } else if (currency === "PLN") {
+      setValueAfterCurrency(1);
+    }
+  }, [currency, valueAfterCurrency, course]);
 
   const dispatch = useDispatch();
 
@@ -23,12 +36,12 @@ const ExpenseInput = () => {
       if (parseInt(value) > 99999999999) {
         setMessage("Stop! You are spending too much!");
       } else if (parseInt(value) > 999999) {
-        dispatch(addExpense(text, parseInt(value)));
+        dispatch(addExpense(text, parseInt(value) * valueAfterCurrency));
         setMessage("Hello mr.  Musk");
         setText("");
         setValue("");
       } else {
-        dispatch(addExpense(text, parseInt(value)));
+        dispatch(addExpense(text, parseInt(value) * valueAfterCurrency));
         setMessage("");
         setText("");
         setValue("");
@@ -43,7 +56,8 @@ const ExpenseInput = () => {
       <HStack spacing={2}>
         <Input
           fontSize={{ base: "14px", md: "16px", lg: "18px" }}
-          height={{ base: "32px", md: "28px", lg: "34px" }}
+          height={{ base: "26px", md: "28px", lg: "34px" }}
+          w="35%"
           borderColor="whiteAlpha.700"
           color="white"
           focusBorderColor="white"
@@ -58,8 +72,9 @@ const ExpenseInput = () => {
           }) => setText(event.target.value)}
         />
         <Input
+          w="35%"
           fontSize={{ base: "14px", md: "16px", lg: "18px" }}
-          height={{ base: "32px", md: "28px", lg: "34px" }}
+          height={{ base: "26px", md: "28px", lg: "34px" }}
           borderColor="whiteAlpha.700"
           color="white"
           focusBorderColor="white"
@@ -75,6 +90,30 @@ const ExpenseInput = () => {
             target: { value: React.SetStateAction<string> };
           }) => setValue(event.target.value)}
         />
+        <Select
+          fontSize={{ base: "10px", md: "12px", lg: "14px" }}
+          height={{ base: "26px", md: "28px", lg: "34px" }}
+          w="content"
+          textColor="whiteAlpha.800"
+          _placeholder={{ opacity: 1, color: "blackAlpha.800" }}
+          value={currency}
+          onChange={(e: { target: { value: React.SetStateAction<string> } }) =>
+            setCurrency(e.target.value)
+          }
+        >
+          <option
+            style={{ color: "white", background: "rgba(0,0,0,0.8)" }}
+            value="EUR"
+          >
+            EUR
+          </option>
+          <option
+            style={{ color: "white", background: "rgba(0,0,0,0.8)" }}
+            value="PLN"
+          >
+            PLN
+          </option>
+        </Select>
       </HStack>
       <ButtonWrapper>
         <MessageWrapper>

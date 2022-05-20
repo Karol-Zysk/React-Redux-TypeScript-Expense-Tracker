@@ -28,13 +28,13 @@ const ActualCourse = () => {
   let coursePLN = (Math.round(course * 100) / 100).toFixed(2);
   let courseEUR = (Math.round((1 / course) * 100) / 100).toFixed(2);
 
-  const [from, setFrom] = useState(0);
+  const [from] = useState(0);
   const [toEUR, setToEUR] = useState(0);
   const [toPLN, setToPLN] = useState(0);
 
   useEffect(() => {
     if (course !== 0) {
-      const timeout = setTimeout(() => {
+      setTimeout(() => {
         setToEUR(parseFloat(coursePLN));
         setToPLN(parseFloat(courseEUR));
       }, 1000);
