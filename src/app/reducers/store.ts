@@ -1,11 +1,15 @@
 import { configureStore } from "@reduxjs/toolkit";
+import thunk from "redux-thunk";
 
-// import counter from "./counter";
 import expenseReducer from "./expenseReducer";
+import nbpDataReducer from "./nbpCourseReducer";
 
-export const store = configureStore({
-  reducer: {
-    //@ts-ignore
-    expense: expenseReducer,
-  },
-});
+export const createStore = () =>
+  configureStore({
+    reducer: {
+      //@ts-ignore
+      expense: expenseReducer, course: nbpDataReducer,
+    },
+    middleware: [thunk],
+  });
+export const store = createStore();

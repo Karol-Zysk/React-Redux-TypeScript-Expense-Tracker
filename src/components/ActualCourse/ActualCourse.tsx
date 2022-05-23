@@ -1,68 +1,83 @@
-import { animate } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
-import useAxios from "../../hooks/useAxios";
-import { Courses, Date, TodaysCourse, Wrapper } from "./ActualCourse.style";
-
-function Counter({ from, to }: any) {
-  const nodeRef = useRef() as React.MutableRefObject<HTMLParagraphElement>;
-
-  useEffect(() => {
-    const node = nodeRef.current;
-
-    const controls = animate(from, to, {
-      duration: 5,
-      ease: "easeOut",
-      onUpdate(value) {
-        node.textContent = value.toFixed(2);
-      },
-    });
-
-    return () => controls.stop();
-  }, [from, to]);
-
-  return <span ref={nodeRef} />;
-}
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import Counter from "../Counter/Counter";
+import {
+  ButtonWrapper,
+  Courses,
+  Date,
+  ErrorText,
+  TextWrapper,
+  TodaysCourse,
+  Wrapper,
+} from "./ActualCourse.style";
+import { INBPState } from "../../../type";
+import { loadDataAsync } from "../../app/actions/nbpApiactions";
+import { Button, Stack } from "@chakra-ui/react";
 
 const ActualCourse = () => {
-  const { course, loading, error } = useAxios();
-  let coursePLN = (Math.round(course * 100) / 100).toFixed(2);
-  let courseEUR = (Math.round((1 / course) * 100) / 100).toFixed(2);
-
-  const [from] = useState(0);
-  const [toEUR, setToEUR] = useState(0);
-  const [toPLN, setToPLN] = useState(0);
+  const [coursePLN, setCoursePLN] = useState(0.2);
+  const [courseEUR, setCourseEUR] = useState(4);
+  const [showInfo, setShowInfo] = useState(false);
+  const dispatch = useDispatch();
+  const { isLoading, course, errorMessage } = useSelector(
+    (state: INBPState) => state.course
+  );
 
   useEffect(() => {
-    if (course !== 0) {
-      setTimeout(() => {
-        setToEUR(parseFloat(coursePLN));
-        setToPLN(parseFloat(courseEUR));
-      }, 1000);
-      
-    }
+    setCourseEUR(parseFloat((Math.round((1 / course) * 100) / 100).toFixed(2)));
+    setCoursePLN(parseFloat((Math.round(course * 100) / 100).toFixed(2)));
   }, [course]);
 
-  if (loading) return <h2>Loading..</h2>;
+  const fetchNBP = () => {
+    dispatch(loadDataAsync());
+    setShowInfo(true);
+  };
+
+  const [from] = useState(0);
 
   return (
-    <>
-      {error && <p>Something went wrong</p>}
-      <Wrapper>
-        <Date>
-          Latest data from
-          <b> NBP: </b>
-        </Date>
-        <Courses>
-          <TodaysCourse>
-            1 <b>EUR</b> = <Counter from={from} to={toEUR} /> PLN
-          </TodaysCourse>
-          <TodaysCourse>
-            1 <b>PLN</b> = <Counter from={from} to={toPLN} /> EUR
-          </TodaysCourse>
-          <TodaysCourse></TodaysCourse>
-        </Courses>
-      </Wrapper>
-    </>
+    <Wrapper>
+      {isLoading ? (
+        <Date>Loading...</Date>
+      ) : errorMessage ? (
+        <Stack direction="column">
+          <ErrorText>{errorMessage}</ErrorText>
+          <ErrorText>Default Course 4</ErrorText>
+        </Stack>
+      ) : (
+        <TextWrapper>
+          <Date>
+            {showInfo ? (
+              <>
+                Latest data from
+                <b> NBP: </b>
+              </>
+            ) : (
+              <>Default Value:</>
+            )}
+          </Date>
+          <Courses>
+            <TodaysCourse>
+              1 <b>EUR</b> = <Counter from={from} to={courseEUR} /> PLN
+            </TodaysCourse>
+            <TodaysCourse>
+              1 <b>PLN</b> = <Counter from={from} to={coursePLN} /> EUR
+            </TodaysCourse>
+            <TodaysCourse></TodaysCourse>
+          </Courses>
+        </TextWrapper>
+      )}
+      <ButtonWrapper>
+        <Button
+          colorScheme="gray"
+          fontSize={{ base: "10px ", md: "15px", lg: "18px" }}
+          padding={{ base: " 2px 5px ", md: "12px", lg: "14px" }}
+          onClick={fetchNBP}
+        >
+          Actual Course
+        </Button>
+      </ButtonWrapper>
+    </Wrapper>
   );
 };
 

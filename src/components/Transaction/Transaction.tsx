@@ -1,8 +1,8 @@
 import { motion } from "framer-motion";
 import React, { FunctionComponent } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { INBPState } from "../../../type";
 import { deleteExpense } from "../../app/actions";
-import useAxios from "../../hooks/useAxios";
 import {
   Table,
   TableItem,
@@ -22,7 +22,7 @@ type Props = {
 const Transaction: FunctionComponent<Props> = ({ text, value, id, index }) => {
   const dispatch = useDispatch();
 
-  const { course } = useAxios();
+  const { course } = useSelector((state: INBPState) => state.course);
   const handleDelete = () => {
     dispatch(deleteExpense(id));
   };

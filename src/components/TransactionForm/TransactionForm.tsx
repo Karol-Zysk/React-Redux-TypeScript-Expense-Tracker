@@ -1,8 +1,8 @@
 import { Button, HStack, Input, Select } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { INBPState } from "../../../type";
 import { addExpense } from "../../app/actions/index";
-import useAxios from "../../hooks/useAxios";
 import {
   Form,
   Message,
@@ -12,11 +12,11 @@ import {
 } from "./TransactionForm.style";
 
 const ExpenseInput = () => {
-  const { course } = useAxios();
+  const { course } = useSelector((state: INBPState) => state.course);
   const [text, setText] = useState("");
   const [message, setMessage] = useState("");
   const [currency, setCurrency] = useState("EUR");
-  console.log(currency);
+  const dispatch = useDispatch();
 
   const [value, setValue] = useState("");
   const [valueAfterCurrency, setValueAfterCurrency] = useState(1);
@@ -28,8 +28,6 @@ const ExpenseInput = () => {
       setValueAfterCurrency(1);
     }
   }, [currency, valueAfterCurrency, course]);
-
-  const dispatch = useDispatch();
 
   const handleSubmit = (event: { preventDefault: () => void }) => {
     if (text !== "" && value !== "") {
@@ -93,7 +91,7 @@ const ExpenseInput = () => {
         <Select
           fontSize={{ base: "14px", md: "16px", lg: "18px" }}
           height={{ base: "26px", md: "28px", lg: "34px" }}
-          w="30%"
+          w={{ base: "30%", sm: "25%", md: "25%", lg: "20%" }}
           textColor="whiteAlpha.800"
           _placeholder={{ opacity: 1, color: "blackAlpha.800" }}
           value={currency}
@@ -126,7 +124,8 @@ const ExpenseInput = () => {
           border="1px"
           onClick={handleSubmit}
           disabled={text === "" || value === ""}
-          h={{ base: "30px", md: "34px", lg: "38px" }}
+          fontSize={{ base: "10px ", md: "15px", lg: "18px" }}
+          padding={{ base: " 2px 5px ", md: "12px", lg: "14px" }}
         >
           Add
         </Button>

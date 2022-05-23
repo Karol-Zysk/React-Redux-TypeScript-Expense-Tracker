@@ -1,8 +1,7 @@
 import { motion } from "framer-motion";
 import React, { useEffect,  useState } from "react";
 import { useSelector } from "react-redux";
-import { State } from "../../../type";
-import useAxios from "../../hooks/useAxios";
+import { INBPState, State } from "../../../type";
 import Counter from "../Counter/Counter";
 import SummedTransacrions from "../SummedTransacrions/SummedTransacrions";
 import { H1 } from "../Transaction/Transaction.style";
@@ -11,16 +10,16 @@ import { MaxExpense, MaxExpenseP } from "../TransactionsList/TransactionsList.st
 
 
 const MaxExpenseTab = () => {
-  const { course } = useAxios();
+  const { course } = useSelector((state: INBPState) => state.course);
   const [maxExp, setMaxExp] = useState();
   const [actualMax, setActualMax] = useState(1);
   const [from] = useState(0);
 
-  const expensesInfo = useSelector((state: State) => state.expense.list);
+  const expensesArray = useSelector((state: State) => state.expense.list);
 
   useEffect(() => {
-    if (expensesInfo.length !== 0) {
-      expensesInfo.reduce(function (prev, current) {
+    if (expensesArray.length !== 0) {
+      expensesArray.reduce(function (prev, current) {
         if (+current["value"] > +prev["value"]) {
           setMaxExp(current);
           return current;
@@ -31,18 +30,18 @@ const MaxExpenseTab = () => {
         }
       });
     }
-  }, [expensesInfo]);
+  }, [expensesArray]);
 
   useEffect(() => {
-    if (expensesInfo.length === 0) {
+    if (expensesArray.length === 0) {
       return;
-    } else if (expensesInfo.length === 1) {
+    } else if (expensesArray.length === 1) {
       //@ts-ignore
-      setActualMax(expensesInfo[0].value);
+      setActualMax(expensesArray[0].value);
     } else if (maxExp) {
       setActualMax(maxExp["value"]);
     }
-  }, [maxExp, expensesInfo]);
+  }, [maxExp, expensesArray]);
 
   
 
@@ -53,20 +52,20 @@ const MaxExpenseTab = () => {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0 }}
     >
-      {!expensesInfo.length ? (
+      {!expensesArray.length ? (
         <H1>No Transactions</H1>
       ) : (
         <H1>Highest Transaction</H1>
       )}
-      {!expensesInfo.length ? null : (
+      {!expensesArray.length ? null : (
         <div>
           <>
             <MaxExpenseP>
               <b>You paid the most for: </b>
-              {expensesInfo.length === 0
+              {expensesArray.length === 0
                 ? ""
-                : expensesInfo.length === 1 //@ts-ignore
-                ? expensesInfo[0].text
+                : expensesArray.length === 1 //@ts-ignore
+                ? expensesArray[0].text
                 : maxExp && maxExp["text"]}{" "}
             </MaxExpenseP>
 
@@ -80,7 +79,7 @@ const MaxExpenseTab = () => {
             </MaxExpenseP>
           </>
           <SummedTransacrions
-          expensesInfo={expensesInfo}/>
+          expensesArray={expensesArray}/>
         </div>
       )}
     </MaxExpense>

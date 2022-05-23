@@ -9,9 +9,7 @@ type Item = {
   id: number;
 };
 
-type Prev = {
-  value: number;
-};
+
 
 const initalState = {
   counter: 0,
@@ -23,7 +21,7 @@ const initalState = {
 
 const expenses = (
   state = initalState,
-  action: { type: any; text: any; value: any; id: number }
+  action: { type: any; text: string; value: string; id: number }
 ) => {
   switch (action.type) {
     case ADD_EXPENSE:
@@ -46,10 +44,8 @@ const expenses = (
         ...state,
         list: state.list.reduce((prev, current) => {
           if (+current["value"] > +prev["value"]) {
-            console.log(state);
             return current;
           } else {
-            console.log(state);
             return prev;
           }
         }),

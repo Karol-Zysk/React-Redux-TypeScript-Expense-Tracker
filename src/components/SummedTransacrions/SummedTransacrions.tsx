@@ -1,24 +1,25 @@
 import React, { useEffect, useState } from "react";
-import useAxios from "../../hooks/useAxios";
+import { useSelector } from "react-redux";
+import { INBPState } from "../../../type";
 import Counter from "../Counter/Counter";
 import { MaxExpenseP } from "../TransactionsList/TransactionsList.style";
 import { Wrapper } from "./SummedTransactions";
 
 type Props = {
-  expensesInfo: [];
+  expensesArray: [];
 };
 
-const SummedTransacrions: React.FC<Props> = ({ expensesInfo }) => {
-  const { course } = useAxios();
+const SummedTransacrions: React.FC<Props> = ({ expensesArray }) => {
+  const { course } = useSelector((state: INBPState) => state.course);
   const [transactionsSum, setTransactionsSum] = useState(0);
   const [from] = useState(transactionsSum);
 
   useEffect(() => {
-    const sum = expensesInfo.reduce((accumulator, object) => {
+    const sum = expensesArray.reduce((accumulator, object) => {
       return accumulator + object["value"];
     }, 0);
     setTransactionsSum(sum);
-  }, [expensesInfo]);
+  }, [expensesArray]);
 
   return (
     <Wrapper>

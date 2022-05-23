@@ -6,7 +6,7 @@ export const Form = styled.form`
   @media (max-width: 768px) {
     height: auto;
   }
-  
+
   justify-content: center;
   flex-direction: column;
   align-items: center;
@@ -14,6 +14,7 @@ export const Form = styled.form`
 `;
 
 export const FormTitle = styled.h2`
+  margin-top: 3rem;
   font-size: 1.5rem;
   @media (max-width: 768px) {
     font-size: 1.4rem;

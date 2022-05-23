@@ -44,6 +44,8 @@ export const MaxExpense = styled.div`
   flex-direction: column;
   text-align: left;
   padding: 2rem;
+  border-top-left-radius: 2rem;
+  box-shadow: -1px -1px 6px gray;
   @media (max-width: 768px) {
     width: auto;
     box-shadow: none;

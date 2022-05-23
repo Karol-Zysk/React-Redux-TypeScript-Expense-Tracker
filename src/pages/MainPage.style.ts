@@ -13,7 +13,6 @@ export const Container = styled.div`
     height: auto;
     display: block;
     min-height: 100vh;
-    align-items: unset;
   }
 `;
 
@@ -25,6 +24,7 @@ export const Wrapper = styled.div`
   display: flex;
   width: 100%;
   height: 100%;
+  
   @media (max-width: 768px) {
     flex-direction: column;
     height: auto;
@@ -36,8 +36,7 @@ export const Table = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
-  border-top-right-radius: 2rem;
-  box-shadow: 3px 0px 6px gray;
+  
   @media (max-width: 768px) {
     border-top-right-radius: 0;
     border-top-left-radius: 0;
