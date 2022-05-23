@@ -37,7 +37,7 @@ const Transaction: FunctionComponent<Props> = ({ text, value, id, index }) => {
       <TableItemID>{index + 1}.</TableItemID>
       <TableItem>{text}</TableItem>
       <TableItemValue>
-         {value).toFixed(2)} PLN <br></br>
+        {value.toFixed(2)} PLN <br></br>
         {(Math.round((value / course) * 100) / 100).toFixed(2)} EUR
       </TableItemValue>
 
