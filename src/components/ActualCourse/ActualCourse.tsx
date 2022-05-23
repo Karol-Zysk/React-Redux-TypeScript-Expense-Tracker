@@ -16,7 +16,7 @@ import { Button, Stack } from "@chakra-ui/react";
 
 const ActualCourse = () => {
   const [coursePLN, setCoursePLN] = useState(0.2);
-  const [courseEUR, setCourseEUR] = useState(4);
+  const [courseEUR, setCourseEUR] = useState(4.6);
   const [showInfo, setShowInfo] = useState(false);
   const dispatch = useDispatch();
   const { isLoading, course, errorMessage } = useSelector(
@@ -42,7 +42,7 @@ const ActualCourse = () => {
       ) : errorMessage ? (
         <Stack direction="column">
           <ErrorText>{errorMessage}</ErrorText>
-          <ErrorText>Default Course 4</ErrorText>
+          <ErrorText>Default Course 4.6</ErrorText>
         </Stack>
       ) : (
         <TextWrapper>

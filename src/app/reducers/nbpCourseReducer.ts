@@ -20,7 +20,7 @@ const nbpDataReducer = (
       return {
         ...state,
         isLoading: true,
-        course: 4,
+        course: 4.6,
         errorMessage: null,
       };
 
